@@ -1,0 +1,237 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+:root {
+    --desaturated-dark-cyan: hsl(180, 29%, 50%);
+    --light-grayish-cyan /*(Background)*/: hsl(180, 52%, 96%);
+    --light-grayish-cyan2 /*(Filter Tablets)*/: hsl(180, 31%, 95%);
+    --dark-grayish-cyan: hsl(180, 8%, 52%);
+    --very-dark-grayish-cyan: hsl(180, 14%, 20%);
+    --white: #fff;
+    font-size: 15px;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "League Spartan", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    background-color: var(--light-grayish-cyan);
+}
+
+.header {
+    width: 100%;
+    height: 200px;
+    background: var(--desaturated-dark-cyan);
+    position: relative;
+}
+
+.header img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.search {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    margin: auto;
+    background-color: var(--white);
+    bottom: -10px;
+    padding: 20px 40px;
+    border-radius: 5px;
+    box-shadow: 0px 3px 20px #5ba4a46b;
+}
+
+.search-container {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+}
+
+.remove-btn {
+    background-color: var(--desaturated-dark-cyan) !important;
+    border: none;
+    outline: none;
+    height: 100%;
+    border-radius: 0 5px 5px 0;
+    padding: 0 8px;
+    cursor: pointer;
+}
+
+.remove-btn:hover {
+    background-color: var(--very-dark-grayish-cyan) !important;
+}
+
+.clear-btn {
+    color: var(--dark-grayish-cyan);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.clear-btn:hover {
+    text-decoration: underline;
+    color: var(--desaturated-dark-cyan);
+}
+
+main {
+    width: 100%;
+}
+
+.card {
+    width: 85%;
+    background-color: var(--white);
+    margin: 40px auto 30px;
+    position: relative;
+    padding: 50px 20px 20px;
+    border-left: 4px solid var(--desaturated-dark-cyan);
+    border-radius: 5px;
+    box-shadow: 0px 3px 20px #5ba4a46b;
+}
+
+.job-offer_info {
+    border-bottom: 1px solid #7b8e8e57;
+}
+
+.job-offer_info img {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: -20px;
+}
+
+.employer {
+    color: var(--desaturated-dark-cyan);
+    font-weight: 700;
+}
+
+.new-tag, .featured-tag {
+    color: var(--light-grayish-cyan);
+    text-transform: uppercase;
+    padding: 5px 8px;
+    border-radius: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.new-tag {
+    margin-left: 25px;
+    background-color: var(--desaturated-dark-cyan);
+}
+
+.featured-tag {
+    background-color: var(--very-dark-grayish-cyan);
+}
+
+.employer-info, .job-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.employer-info, .job-offer_info h2 {
+    margin-bottom: 15px;
+}
+
+.job-title {
+    font-size: 1.1rem;
+    color: var(--very-dark-grayish-cyan);
+    text-decoration: none;
+}
+
+.job-title:hover {
+    color: var(--desaturated-dark-cyan);
+}
+
+.job-info {
+    margin-bottom: 20px;
+    color: var(--very-dark-grayish-cyan);
+}
+
+.job-info p:not(:first-of-type)::before {
+    content: "•";
+    color: var(--very-dark-grayish-cyan);
+    margin-right: 5px;
+}
+
+.work-tags {
+    margin-top: 30px;
+    display: flex;
+    width: 80%;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.work-tags span, .search-tags {
+     background-color: var(--light-grayish-cyan2);
+     color: var(--desaturated-dark-cyan);
+     font-weight: 600;
+     cursor: pointer;
+     border-radius: 5px;
+}
+
+.work-tags span {
+     padding: 5px 10px;
+}
+
+.work-tags span:hover {
+    background-color: var(--desaturated-dark-cyan);
+    color: var(--white);
+}
+
+.search-tags {
+    display: flex;
+    height: 40px;
+}
+
+.search-tag {
+    padding: 0 10px;
+}
+
+@media screen and (min-width: 1024px) {
+    .header {
+        height: 145px;
+    }
+
+    .search, .card {
+        width: 1000px;
+    }
+
+    .job-offer_info {
+        border: none;
+        width: 40%;
+        padding-left: 100px;
+    }
+
+    .card {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+    }
+
+    .job-offer_info img {
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 70px;
+        height: 70px;
+    }
+
+    .work-tags {
+        width: 60%;
+        justify-content: flex-end;
+        align-items: baseline;
+    }
+}
