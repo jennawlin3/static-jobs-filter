@@ -33,6 +33,10 @@ body {
     position: relative;
 }
 
+.hide {
+    display: none;
+}
+
 .header img {
     width: 100%;
     object-fit: cover;
@@ -141,7 +145,7 @@ main {
     gap: 10px;
 }
 
-.employer-info, .job-offer_info h2 {
+.employer-info {
     margin-bottom: 15px;
 }
 
@@ -156,6 +160,7 @@ main {
 }
 
 .job-info {
+    margin-top: 15px;
     margin-bottom: 20px;
     color: var(--very-dark-grayish-cyan);
 }
@@ -174,7 +179,7 @@ main {
     flex-wrap: wrap;
 }
 
-.work-tags span, .search-tags {
+.work-tags span, .search-tags, .languages {
      background-color: var(--light-grayish-cyan2);
      color: var(--desaturated-dark-cyan);
      font-weight: 600;
@@ -182,11 +187,11 @@ main {
      border-radius: 5px;
 }
 
-.work-tags span {
+.work-tags span, .languages {
      padding: 5px 10px;
 }
 
-.work-tags span:hover {
+.work-tags span:hover, .languages:hover {
     background-color: var(--desaturated-dark-cyan);
     color: var(--white);
 }
