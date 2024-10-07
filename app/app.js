@@ -244,24 +244,17 @@ function filterLanguages(value) {
 
     if($filteredCards.length > 0) {
         $filteredCards.forEach(card => {
+            console.log(card);
+            console.log(value);
             card.childNodes[1].childNodes.forEach(c => {
                 if(c.textContent === value) {
-                    c.parentElement.parentElement.classList.add("filter");
-                    c.parentElement.parentElement.classList.remove("hide");               
+                    c.parentElement.parentElement.classList.add("filter-advanced");
+                    c.parentElement.parentElement.classList.remove("filter");      
                 }
-            })
-        /*.forEach(tag => {
-            console.log(tag);
-            languagesTags.forEach(l => {
-                if(l !== value) {
-                    console.log(tag);
-                    //tag.parentElement.parentElement.classList.remove("filter");
-                    //tag.parentElement.parentElement.classList.add("hide"); 
-                }                 
-            })   
-            });*/
-        return;            
+            })          
         })
+        updateAdvancedList();
+        return;  
     }
     $languagesTags.forEach(tag => {
         languagesTags.forEach(l => {
@@ -289,6 +282,9 @@ function deleteTag(btn) {
          if(c.textContent === btn.id) {
            c.parentElement.parentElement.classList.remove("hide");
            c.parentElement.parentElement.classList.remove("filter");
+           if(c.parentElement.parentElement.classList.contains("filter-advanced")) {
+            c.parentElement.parentElement.classList.remove("filter-advanced");
+           }
            cardsLength--;
          }
     });
@@ -344,6 +340,20 @@ function checkList() {
                 }
             })
         })
+}
+
+function updateAdvancedList() {
+    const $cards = d.querySelectorAll(".card");
+
+    $cards.forEach(c => {
+        if(c.classList.contains("filter-advanced")) {
+            c.classList.remove("filter");
+            c.classList.remove("hide");
+        } else {
+            c.classList.add("hide");
+            c.classList.remove("filter");
+        }
+    })    
 }
 
 function updateList() {
