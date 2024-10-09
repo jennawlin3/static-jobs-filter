@@ -5,7 +5,7 @@ const $searchContainer = d.querySelector(".search-container");
 const $clearBtn = d.querySelector(".clear-btn");
 let roleTag = "";
 let levelTag = "";
-let languagesTags = [];
+let languagesTagsArr = [];
 let searchTagsArray = [];
 
 async function loadData() {
@@ -16,7 +16,6 @@ async function loadData() {
 
 function createOffers(data) {
     data.forEach((d, i) => {
-        //console.log(data);
 
         const card = document.createElement("article");
         card.classList.add("card");
@@ -95,8 +94,6 @@ function createOffers(data) {
             workTags.appendChild(languages);
         });
 
-        //console.log(workTags);
-
         jobOfferInfo.appendChild(jobTitle);
         jobOfferInfo.appendChild(jobInfo);
 
@@ -116,24 +113,19 @@ function createOffers(data) {
         });
 }
 
-d.addEventListener("DOMContentLoaded", loadData())
+d.addEventListener("DOMContentLoaded", loadData());
 
 function filterTag(value) {
-    const $roleTags = d.querySelectorAll(".role");
-    const $levelTags = d.querySelectorAll(".level");
-    const $languagesTags = d.querySelectorAll(".languages");
-
     if(searchTagsArray.indexOf(value.textContent) !== -1) {
         return;
     }
     
     searchTagsArray.push(value.textContent);
-    //filterCard.push(value.getAttribute("data-id"));
+    console.log(searchTagsArray);
 
     const searchTags = d.createElement("div");
     searchTags.classList.add("search-tags");
     searchTags.id = value.textContent;
-    searchTags.setAttribute("data-id", value.getAttribute("data-id"));
     const searchTagContainer = d.createElement("div");
     searchTagContainer.classList.add("search-tag_container");
     const searchTag = d.createElement("span");
@@ -155,16 +147,16 @@ function filterTag(value) {
 
     if(value.classList.contains("role")) {
         roleTag = value.textContent;
-        filterRole(value);
+        filterRole(roleTag);
     }
 
     if(value.classList.contains("level")) {
         levelTag = value.textContent;
-        filterLevel(value);
+        filterLevel(levelTag);
     }
 
     if(value.classList.contains("languages")) {
-        languagesTags.push(value.textContent);
+        languagesTagsArr.push(value.textContent);
         filterLanguages(value.textContent);
     }
 
@@ -180,190 +172,214 @@ function filterTag(value) {
     })
 }
 
-function filterRole() {
-    const $filteredCards = d.querySelectorAll(".filter");
+function filterRole(value) {
     const $roleTags = d.querySelectorAll(".role");
 
-    if($filteredCards.length > 0) {
-        $filteredCards.forEach(card => {
-            //console.log(card);
-        $roleTags.forEach(tag => {
-                if(tag.textContent  !== roleTag) {
-                    tag.parentElement.parentElement.classList.add("hide");
-                }            
-            });
-        return;            
-        })
-    }
-
     $roleTags.forEach(tag => {
-        //console.log(tag);
-        //console.log(roleTag);
-            if(tag.textContent  === roleTag) {
-                tag.parentElement.parentElement.classList.remove("hide");
-                tag.parentElement.parentElement.classList.add("filter");
-            }            
-        })
-        
-        updateList();
+    if(tag.textContent === value) {
+        tag.parentElement.parentElement.classList.add("filterRole");    
+        } 
+    })
+    updateList();
 }
 
-function filterLevel() {
-    const $filteredCards = d.querySelectorAll(".filter");
+function filterLevel(value) { 
     const $levelTags = d.querySelectorAll(".level");
 
-    if($filteredCards.length > 0) {
-        $filteredCards.forEach(card => {
-            //console.log(card);
-        $levelTags.forEach(tag => {
-            //console.log(levelTag);
-            //console.log(tag);
-                if(tag.textContent !== levelTag) {
-                    tag.parentElement.parentElement.classList.add("hide");
-                }            
-            });          
-        })
-        return;  
-    }
-
     $levelTags.forEach(tag => {
-        //console.log(tag);
-        //console.log(roleTag);
-            if(tag.textContent  === levelTag) {
-                tag.parentElement.parentElement.classList.remove("hide");
-                tag.parentElement.parentElement.classList.add("filter");
-            }            
-        })
-        
-        updateList();
+    console.log(tag.textContent);
+    if(tag.textContent === value) {
+        tag.parentElement.parentElement.classList.add("filterLevel");    
+        } 
+    });
+    updateList();
 }
 
 function filterLanguages(value) {
-    const $filteredCards = d.querySelectorAll(".filter");
+    const $filtered1 = d.querySelectorAll(".filter1");
+    const $filtered2 = d.querySelectorAll(".filter2");
     const $languagesTags = d.querySelectorAll(".languages");
 
-    if($filteredCards.length > 0) {
-        $filteredCards.forEach(card => {
-            console.log(card);
-            console.log(value);
-            card.childNodes[1].childNodes.forEach(c => {
-                if(c.textContent === value) {
-                    c.parentElement.parentElement.classList.add("filter-advanced");
-                    c.parentElement.parentElement.classList.remove("filter");      
-                }
-            })          
-        })
-        updateAdvancedList();
-        return;  
-    }
+    if($filtered1.length === 0) {
     $languagesTags.forEach(tag => {
-        languagesTags.forEach(l => {
-            if(tag.textContent === l) {
-                console.log(l);
-                tag.parentElement.parentElement.classList.add("filter");
-            }                 
-        })            
-    })  
+    if(tag.textContent === value) {
+        tag.parentElement.parentElement.classList.add("filter1");    
+        } 
+    })
+    updateList();
+    return;    
+    } 
+    
+    if($filtered2.length === 0) {    
+        $filtered1.forEach(c => {
+        c.childNodes[1].childNodes.forEach(cc => {
+            //console.log(cc.textContent);
+            if(cc.textContent === value) {
+                cc.parentElement.parentElement.classList.add("filter2")
+                }
+            });           
+        });
         updateList();
+    } else {
+        //console.log("hola");
+        $filtered2.forEach(c => {
+            c.childNodes[1].childNodes.forEach(cc => {
+                //console.log(cc.textContent);
+                if(cc.textContent === value) {
+                    cc.parentElement.parentElement.classList.add("filter3")
+                    }
+                });           
+            });
+            updateList();
+    }  
 }
 
 function deleteTag(btn) {
-    const $cards = document.querySelectorAll(".card");
-    const $cardsFiltered = document.querySelectorAll(".filter");
-    const $searchTags = d.querySelectorAll(".search-tags");
-    let searchTagLength = $searchTags.length - 1;
+    const $searchContainer = d.querySelector(".search-container");
+    const $cards = d.querySelectorAll(".card");
+    const $filter3Cards = d.querySelectorAll(".filter3");
+    const $filter2Cards = d.querySelectorAll(".filter2");
+    const $filter1Cards = d.querySelectorAll(".filter1");
+    const $filterRole = d.querySelectorAll(".filterRole");
+    const $filterLevel = d.querySelectorAll(".filterLevel");
 
-    let cardsLength = $cardsFiltered.length;
+    searchTagsArray = searchTagsArray.filter(item => item !== btn.textContent);
 
-    searchTagsArray = searchTagsArray.filter(item => item !== btn.id);
+    languagesTagsArr.forEach(lTag => {
+        if(lTag === btn.textContent) {
+            if($filter3Cards.length > 0) {
+                $cards.forEach(c => {
+                    c.classList.remove("filter3");
+                });
+                return;
+            }
+            if($filter2Cards.length > 0) {
+                $cards.forEach(c => {
+                    c.classList.remove("filter2");
+                })
+                return;
+            }
+            if($filter1Cards.length > 0) {
+                $cards.forEach(c => {
+                    c.classList.remove("filter1");
+                })
+                return;
+            }
+        }
+    })
 
-    $cardsFiltered.forEach(card => {
-    card.childNodes[1].childNodes.forEach(c => {
-         if(c.textContent === btn.id) {
-           c.parentElement.parentElement.classList.remove("hide");
-           c.parentElement.parentElement.classList.remove("filter");
-           if(c.parentElement.parentElement.classList.contains("filter-advanced")) {
-            c.parentElement.parentElement.classList.remove("filter-advanced");
-           }
-           cardsLength--;
-         }
-    });
-});
-
-    languagesTags = languagesTags.filter(item => item !== btn.id);
-
-    if(roleTag === btn.id) {
-        roleTag = "";
+    if(btn.textContent === roleTag) {
+        $cards.forEach(c => {
+            if(c.classList.contains("filterRole")) {
+                c.classList.remove("filterRole");
+                roleTag = "";
+            }
+        });
     }
 
-    if(levelTag === btn.id) {
-        levelTag = "";
+    if(btn.textContent === levelTag) {
+        $cards.forEach(c => {
+            if(c.classList.contains("filterLevel")) {
+                c.classList.remove("filterLevel");
+                levelTag = "";
+            }
+        });
+    }
+
+    if(searchTagsArray.length === 0) {
+        $cards.forEach(c => {
+            c.classList.remove("hide");
+            c.classList.remove("filterLevel");
+            c.classList.remove("filter1");
+            c.classList.remove("filter2");
+            c.classList.remove("filter3");
+        })
     }
 
     $searchContainer.removeChild(btn);
-
-    if(searchTagLength > 0) {
-        checkList();
-        return;
-    }
-
-    if(cardsLength === 0) {
-        for(let i = 0; i < $cards.length; i++) {
-            $cards[i].classList.remove("hide");
-        }
-            return;
-    }
+    console.log(searchTagsArray);
 }
 
 function checkList() {
-    const $searchTags = d.querySelectorAll(".search-tags");
-    const $roleTags = d.querySelectorAll(".role");
-    const $levelTags = d.querySelectorAll(".level");
-    const $languagesTags = d.querySelectorAll(".languages");
 
-    $searchTags.forEach(tag => {
-            $roleTags.forEach(wTag => {
-                if(wTag.textContent === tag.id) {
-                    filterRole();
-                }
-            });
-            
-            $levelTags.forEach(wTag => {
-                if(wTag.textContent === tag.id) {
-                    filterLevel();
-                }
-            });
-
-            $languagesTags.forEach(wTag => {
-                if(wTag.textContent === tag.id) {
-                    filterLanguages(tag.id);
-                }
-            })
-        })
-}
-
-function updateAdvancedList() {
-    const $cards = d.querySelectorAll(".card");
-
-    $cards.forEach(c => {
-        if(c.classList.contains("filter-advanced")) {
-            c.classList.remove("filter");
-            c.classList.remove("hide");
-        } else {
-            c.classList.add("hide");
-            c.classList.remove("filter");
-        }
-    })    
 }
 
 function updateList() {
     const $cards = d.querySelectorAll(".card");
+    const filter3Cards = d.querySelectorAll(".filter3");
+    const filter2Cards = d.querySelectorAll(".filter2");
+    const filter1Cards = d.querySelectorAll(".filter1");
+    const filterRole = d.querySelectorAll(".filterRole");
+    const filterLevel = d.querySelectorAll(".filterLevel");
 
     $cards.forEach(c => {
-        if(!(c.classList.contains("filter"))) {
-            c.classList.add("hide");
-        }        
-    })
+        if(filter3Cards.length > 0) {
+            console.log(c.classList);
+            if(!(c.classList.contains("filter3"))) {
+                c.classList.add("hide");
+            }
+            if(filterRole.length > 0) {
+                if(!(c.classList.contains("filterRole"))) {
+                    c.classList.add("hide");
+                }
+            }
+            if(filterLevel.length > 0) {
+                if(!(c.classList.contains("filterLevel"))) {
+                    c.classList.add("hide");
+                }
+            }
+            return;
+        }
+
+        if(filter2Cards.length > 0) {
+            console.log(c.classList);
+            if(!(c.classList.contains("filter2"))) {
+                c.classList.add("hide");
+            }
+            if(filterRole.length > 0) {
+                if(!(c.classList.contains("filterRole"))) {
+                    c.classList.add("hide");
+                }
+            }
+            if(filterLevel.length > 0) {
+                if(!(c.classList.contains("filterLevel"))) {
+                    c.classList.add("hide");
+                }
+            }
+            return;
+        }
+
+        if(filter1Cards.length > 0) {
+            console.log(c.classList);
+            if(!(c.classList.contains("filter1"))) {
+                c.classList.add("hide");
+            }
+            if(filterRole.length > 0) {
+                if(!(c.classList.contains("filterRole"))) {
+                    c.classList.add("hide");
+                }
+            }
+            if(filterLevel.length > 0) {
+                if(!(c.classList.contains("filterLevel"))) {
+                    c.classList.add("hide");
+                }
+            }
+            return;
+        }
+
+        if(filter1Cards.length === 0 && filter2Cards.length === 0 && filter3Cards.length === 0) {
+            if(filterRole.length > 0) {
+                if(!(c.classList.contains("filterRole"))) {
+                    c.classList.add("hide");
+                }
+            }
+            if(filterLevel.length > 0) {
+                if(!(c.classList.contains("filterLevel"))) {
+                    c.classList.add("hide");
+                }
+            }
+        }
+    })      
 }
 
 $clearBtn.addEventListener("click", e => {
@@ -379,9 +395,11 @@ $clearBtn.addEventListener("click", e => {
     
     $cards.forEach(card => {
         card.classList.remove("hide");
-        card.classList.remove("filter");
+        card.classList.remove("filterRole");
+        card.classList.remove("filterLevel");
+        card.classList.remove("filter1");
+        card.classList.remove("filter2");
+        card.classList.remove("filter3");
     });
 })
-
-
 
