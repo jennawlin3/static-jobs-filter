@@ -121,7 +121,7 @@ function filterTag(value) {
     }
     
     searchTagsArray.push(value.textContent);
-    console.log(searchTagsArray);
+    //console.log(searchTagsArray);
 
     const searchTags = d.createElement("div");
     searchTags.classList.add("search-tags");
@@ -187,7 +187,7 @@ function filterLevel(value) {
     const $levelTags = d.querySelectorAll(".level");
 
     $levelTags.forEach(tag => {
-    console.log(tag.textContent);
+    //console.log(tag.textContent);
     if(tag.textContent === value) {
         tag.parentElement.parentElement.classList.add("filterLevel");    
         } 
@@ -242,31 +242,46 @@ function deleteTag(btn) {
     const $filter1Cards = d.querySelectorAll(".filter1");
     const $filterRole = d.querySelectorAll(".filterRole");
     const $filterLevel = d.querySelectorAll(".filterLevel");
+    let languagesTagsArrLength = languagesTagsArr.length;
 
     searchTagsArray = searchTagsArray.filter(item => item !== btn.textContent);
 
-    languagesTagsArr.forEach(lTag => {
-        if(lTag === btn.textContent) {
-            if($filter3Cards.length > 0) {
-                $cards.forEach(c => {
-                    c.classList.remove("filter3");
-                });
-                return;
-            }
-            if($filter2Cards.length > 0) {
-                $cards.forEach(c => {
-                    c.classList.remove("filter2");
-                })
-                return;
-            }
-            if($filter1Cards.length > 0) {
-                $cards.forEach(c => {
-                    c.classList.remove("filter1");
-                })
-                return;
+    console.log(languagesTagsArr);
+
+    console.log(languagesTagsArr.length);
+
+    for(let i = 0; i <= languagesTagsArr.length; i++) {
+        //console.log(languagesTagsArr[i]);
+        if(languagesTagsArr[i] === btn.textContent) {
+            //console.log(typeof languagesTagsArrLength);
+            switch(languagesTagsArrLength) {
+                case 3:
+                    $cards.forEach(c => {
+                        c.classList.remove("filter3");
+                    });
+                    languagesTagsArr = languagesTagsArr.filter(item => item !== btn.textContent);
+                    console.log(languagesTagsArr);
+                    checkList("lg");
+                break;
+                case 2:
+                    $cards.forEach(c => {
+                        console.log("hola");
+                        c.classList.remove("filter2");
+                    });
+                    languagesTagsArr = languagesTagsArr.filter(item => item !== btn.textContent);
+                    checkList("lg");
+                break;
+                case 1:
+                    $cards.forEach(c => {
+                        console.log("hola");
+                        c.classList.remove("filter1");
+                    });
+                    languagesTagsArr = languagesTagsArr.filter(item => item !== btn.textContent);
+                    checkList("lg");
+                break;
             }
         }
-    })
+    }
 
     if(btn.textContent === roleTag) {
         $cards.forEach(c => {
@@ -275,6 +290,7 @@ function deleteTag(btn) {
                 roleTag = "";
             }
         });
+        checkList("role");
     }
 
     if(btn.textContent === levelTag) {
@@ -284,6 +300,7 @@ function deleteTag(btn) {
                 levelTag = "";
             }
         });
+        checkList("level")
     }
 
     if(searchTagsArray.length === 0) {
@@ -298,10 +315,86 @@ function deleteTag(btn) {
 
     $searchContainer.removeChild(btn);
     console.log(searchTagsArray);
+    return;
 }
 
-function checkList() {
+function checkList(value) {
+    const $cards = d.querySelectorAll(".card");
+    const filter3Cards = d.querySelectorAll(".filter3");
+    const filter2Cards = d.querySelectorAll(".filter2");
+    const filter1Cards = d.querySelectorAll(".filter1");
+    const filterRole = d.querySelectorAll(".filterRole");
+    const filterLevel = d.querySelectorAll(".filterLevel");
+    
+    if(value === "lg") {
+        if(filter2Cards.length > 0) {
+            filter2Cards.forEach(c => {
+            if(c.classList.contains("hide")) {
+                c.classList.remove("hide");
+            }     
+            });
+            return;
+        }
+        if(filter1Cards.length > 0) {
+            filter1Cards.forEach(c => {
+                if(c.classList.contains("filterRole")) {
+                    console.log(c);
+                    c.classList.remove("hide");
+                    return;
+                }
+                if(c.classList.contains("filterLevel") && c.classList.contains("filterRole")) {
+                    console.log(c);
+                    c.classList.remove("hide");
+                    return;
+                }
+                if(c.classList.contains("filterLevel")) {
+                    console.log(c);
+                    c.classList.remove("hide");
+                    return;
+                }
+            });
+            return;
+        }
+        if(filter1Cards.length === 0) {
+            if(filterRole.length > 0) {
+             filterRole.forEach(c => {
+                if(c.classList.contains("hide")) {
+                    c.classList.contains("hide");
+                }
+             })   
+            }
+        }        
+    }
+    if(value === "level") {
+        if(filter3Cards.length > 0) {
+            filter3Cards.forEach(c => {
+                c.classList.remove("hide");
+            });
+            return;
+        } 
+        if(filter2Cards.length > 0) {
+            filter2Cards.forEach(c => {
+                c.classList.remove("hide");
+            });
+            return;
+        }
+        if(filter1Cards.length > 0) {
+            filter2Cards.forEach(c => {
+                c.classList.remove("hide");
+            });
+            return;
+        }
+        if(filterRole.length > 0) {
+            filterRole.forEach(c => {
+                c.classList.remove("hide");
+                console.log(c);
+            }); 
+            return;
+        }  
+    }
+    if(value === "role") {
 
+    }
 }
 
 function updateList() {
@@ -314,7 +407,7 @@ function updateList() {
 
     $cards.forEach(c => {
         if(filter3Cards.length > 0) {
-            console.log(c.classList);
+            //console.log(c.classList);
             if(!(c.classList.contains("filter3"))) {
                 c.classList.add("hide");
             }
@@ -332,7 +425,7 @@ function updateList() {
         }
 
         if(filter2Cards.length > 0) {
-            console.log(c.classList);
+            //console.log(c.classList);
             if(!(c.classList.contains("filter2"))) {
                 c.classList.add("hide");
             }
@@ -350,7 +443,7 @@ function updateList() {
         }
 
         if(filter1Cards.length > 0) {
-            console.log(c.classList);
+            //console.log(c.classList);
             if(!(c.classList.contains("filter1"))) {
                 c.classList.add("hide");
             }
